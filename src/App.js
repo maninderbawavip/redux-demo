@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  // has a context memeory which is accesible by this
+  // this -> context of class or method at which it is being called
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: "myButton"
+    }
+    // this.checkDataNew = this.checkData.bind(this)
+  }
+
+
+  checkData = () => {
+    console.log(this, "from checkdata function")
+    this.setState({
+      value: "something"
+    })
+  }
+
+  render() {
+    console.log(this, 'from render')
+    return (<div>hello {this.props.fullName}
+    myButton
+      <button onClick={this.checkData}>{this.state.value}</button>
+    </div>)
+  }
+
+}
+// mapStoreStateToComponentProps
+
+//mapStateToProps
+
+
+const mapStateToProps = (state) => {
+  // receives the global store state
+  // returns the props to be injected in the component
+  return {
+    fullName: state.firstName + " " + state.lastName
+  }
 }
 
-export default App;
+
+export default connect(mapStateToProps)(App);
