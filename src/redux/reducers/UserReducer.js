@@ -18,9 +18,15 @@ export const UserReducer = (state=INITIAL_STATE, action) => {
 
     if(action.type === "UPDATE_FIRST_NAME"){
         const newState = {...state}
-        newState.firstName = "Rahul"
+        newState.firstName = action.value
         return newState
     }
     
+    if(action.type === "UPDATE_LAST_NAME"){
+        const newState = {...state}
+        newState.lastName = action.value
+        return newState
+    }
+
     return state;
 }

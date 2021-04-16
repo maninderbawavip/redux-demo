@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
+import { updateFirstName, updateLastName } from "./redux/actions/UserActions";
 
 class App extends Component {
 
@@ -8,24 +9,37 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: "myButton"
+      inputValue: ""
     }
     // this.checkDataNew = this.checkData.bind(this)
   }
 
+  changeFirstName = () => {
+    this.props.updateFirstName(this.state.inputValue)
+  }
 
-  checkData = () => {
-    console.log(this, "from checkdata function")
-    this.setState({
-      value: "something"
-    })
+  changeLastName = () => {
+    this.props.updateLastName(this.state.inputValue)
   }
 
   render() {
-    console.log(this, 'from render')
-    return (<div>hello {this.props.fullName}
-    myButton
-      <button onClick={this.checkData}>{this.state.value}</button>
+
+    return (<div>
+
+      <p> hello {this.props.fullName} </p>
+
+      <input type="text" value={this.state.inputValue} onChange={(e) => this.setState({ inputValue: e.target.value })} />
+
+      <button onClick={this.changeFirstName}>Change First Name</button>
+      <button onClick={this.changeLastName}>Change Last Name</button>
+      
+      <div>
+
+        {/* {this.props.posts.map(item => {
+          return <p>{item.postTitle}</p>
+        })} */}
+      </div>
+
     </div>)
   }
 
@@ -38,10 +52,12 @@ class App extends Component {
 const mapStateToProps = (state) => {
   // receives the global store state
   // returns the props to be injected in the component
+
   return {
-    fullName: state.firstName + " " + state.lastName
+    posts: state.postsInfo,
+    fullName: state.userInfo.firstName + " " + state.userInfo.lastName
   }
 }
 
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { updateFirstName, updateLastName })(App);
